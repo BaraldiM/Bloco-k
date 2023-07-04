@@ -7,12 +7,8 @@ def selecionar_arquivo():
     # Exibir caixa de diálogo para selecionar o arquivo
     caminho_arquivo = filedialog.askopenfilename()
     print(caminho_arquivo)
-
-    # Verificar se o arquivo foi selecionado
-    if caminho_arquivo:
-        entrada_caminho.delete(0, tk.END)
-        entrada_caminho.insert(tk.END, caminho_arquivo)
-        #entry_caminho_arquivo.config(state="readonly")
+    entrada_caminho.delete(0, tk.END)
+    entrada_caminho.insert(tk.END, caminho_arquivo)
 
 def substituir_data():
     # Obter os valores inseridos nos campos de entrada
