@@ -36,14 +36,13 @@ def substituir_data():
 
 # Cria uma janela
 janela = tk.Tk()
+janela.title("Trocar datas bloco K")
+janela.geometry("400x200")
 
-# Cria os campos de entrada
-label_caminho_arquivo = tk.Label(janela, text="Caminho do arquivo:")
-label_caminho_arquivo.pack()
 entry_caminho_arquivo = tk.Entry(janela, state="normal")
-entry_caminho_arquivo.pack(side=tk.LEFT, expand=True, fill=tk.X)
+entry_caminho_arquivo.pack()
 button_selecionar_arquivo = tk.Button(janela, text="Selecionar arquivo", command=selecionar_arquivo)
-button_selecionar_arquivo.pack(side=tk.LEFT)
+button_selecionar_arquivo.pack()
 
 label_data_antiga = tk.Label(janela, text="Data antiga:")
 label_data_antiga.pack()
