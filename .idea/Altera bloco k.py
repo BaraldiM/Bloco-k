@@ -24,8 +24,15 @@ def substituir_data():
         # Leia o conteúdo do arquivo
         conteudo = arquivo.read()
 
-    # Substitua a data antiga pela nova usando expressões regulares
-    conteudo_modificado = re.sub(data_antiga, data_nova, conteudo)
+    # Substitua a data antiga pela nova usando expressões regulares,
+    # apenas para linhas que começam com "|K200|"
+    conteudo_modificado = ""
+    for linha in conteudo.split('\n'):
+        if linha.startswith("|K200|"):
+            linha_modificada = re.sub(data_antiga, data_nova, linha)
+            conteudo_modificado += linha_modificada + '\n'
+        else:
+            conteudo_modificado += linha + '\n'
 
     # Abra o arquivo em modo de escrita
     with open(caminho_arquivo, 'w') as arquivo:
