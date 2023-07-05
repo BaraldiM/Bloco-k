@@ -12,7 +12,8 @@ def selecionar_arquivo():
 
 def substituir_data():
     # Obter os valores inseridos nos campos de entrada
-    data_antiga = entrada_data_antiga.get()
+    #data_antiga = entrada_data_antiga.get()
+
     data_nova = entrada_data_nova.get()
     caminho_arquivo = entrada_caminho.get()
 
@@ -24,9 +25,10 @@ def substituir_data():
     # Substitua a data antiga pela nova usando expressões regulares,
     # apenas para linhas que começam com "|K200|"
     conteudo_modificado = ""
+
     for linha in conteudo.split('\n'):
         if linha.startswith("|K200|"):
-            linha_modificada = re.sub(data_antiga, data_nova, linha)
+            linha_modificada = re.sub(r'\d{8}', data_nova, linha)
             conteudo_modificado += linha_modificada + '\n'
         else:
             conteudo_modificado += linha + '\n'
@@ -48,10 +50,10 @@ entrada_caminho.pack()
 button_selecionar_arquivo = tk.Button(janela, text="Selecionar arquivo", command=selecionar_arquivo)
 button_selecionar_arquivo.pack()
 
-label_data_antiga = tk.Label(janela, text="Data antiga:")
-label_data_antiga.pack()
-entrada_data_antiga = tk.Entry(janela)
-entrada_data_antiga.pack()
+#label_data_antiga = tk.Label(janela, text="Data antiga:")
+#label_data_antiga.pack()
+#entrada_data_antiga = tk.Entry(janela)
+#entrada_data_antiga.pack()
 
 label_data_nova = tk.Label(janela, text="Data nova:")
 label_data_nova.pack()
