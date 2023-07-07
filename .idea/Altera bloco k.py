@@ -1,21 +1,16 @@
-import os
+import PySimpleGUI as sg
 import re
-import tkinter as tk
-from tkinter import filedialog
 
 def selecionar_arquivo():
     # Exibir caixa de diálogo para selecionar o arquivo
-    caminho_arquivo = filedialog.askopenfilename()
+    caminho_arquivo = sg.popup_get_file("Selecione um arquivo")
     print(caminho_arquivo)
-    entrada_caminho.delete(0, tk.END)
-    entrada_caminho.insert(tk.END, caminho_arquivo)
+    janela['entrada_caminho'].update(caminho_arquivo)
 
 def substituir_data():
     # Obter os valores inseridos nos campos de entrada
-    #data_antiga = entrada_data_antiga.get()
-
-    data_nova = entrada_data_nova.get()
-    caminho_arquivo = entrada_caminho.get()
+    data_nova = janela['entrada_data_nova'].get()
+    caminho_arquivo = janela['entrada_caminho'].get()
 
     # Abra o arquivo em modo de leitura
     with open(caminho_arquivo, 'r') as arquivo:
@@ -40,29 +35,25 @@ def substituir_data():
 
     print('A substituição da data foi realizada com sucesso!')
 
-# Cria uma janela
-janela = tk.Tk()
-janela.title("Trocar datas bloco K")
-janela.geometry("400x200")
+# Definir o layout da janela
+layout = [
+    [sg.Text("Caminho do arquivo: "), sg.Input(key='entrada_caminho'), sg.FileBrowse(button_text='Selecionar arquivo', key='botao_selecionar_arquivo')],
+    #[sg.Text("Data antiga: "), sg.Input(key='entrada_data_antiga')],
+    [sg.Text("Data nova: "), sg.Input(key='entrada_data_nova')],
+    [sg.Button("Substituir", key='botao_substituir')]
+]
 
-entrada_caminho = tk.Entry(janela, state="normal")
-entrada_caminho.pack()
-button_selecionar_arquivo = tk.Button(janela, text="Selecionar arquivo", command=selecionar_arquivo)
-button_selecionar_arquivo.pack()
+# Criar a janela
+janela = sg.Window("Trocar datas bloco K", layout)
 
-#label_data_antiga = tk.Label(janela, text="Data antiga:")
-#label_data_antiga.pack()
-#entrada_data_antiga = tk.Entry(janela)
-#entrada_data_antiga.pack()
+# Loop principal da janela
+while True:
+    event, values = janela.read()
+    if event == sg.WINDOW_CLOSED:
+        break
+    elif event == 'botao_selecionar_arquivo':
+        selecionar_arquivo()
+    elif event == 'botao_substituir':
+        substituir_data()
 
-label_data_nova = tk.Label(janela, text="Data nova:")
-label_data_nova.pack()
-entrada_data_nova = tk.Entry(janela)
-entrada_data_nova.pack()
-
-# Cria um botão para substituir a data
-botao_substituir = tk.Button(janela, text="Substituir", command=substituir_data)
-botao_substituir.pack()
-
-# Executa o loop principal da aplicação
-janela.mainloop()
+janela.close()
